@@ -12,8 +12,8 @@
         <main>
             <div class="grid">
                 <!-- Turn Indicator -->
-                <div class="turn">
-                    <i class="fa-solid fa-x turquoise"></i>
+                <div class="turn yellow" data-id="turn">
+                    <i class="fa-solid fa-x"></i>
                     <p>Player 1, you're up!</p>
                 </div>
 
@@ -31,15 +31,15 @@
                 </div>
 
                 <!-- Game Board -->
-                <div class="square shadow"></div>
-                <div class="square shadow"></div>
-                <div class="square shadow"></div>
-                <div class="square shadow"></div>
-                <div class="square shadow"></div>
-                <div class="square shadow"></div>
-                <div class="square shadow"></div>
-                <div class="square shadow"></div>
-                <div class="square shadow"></div>
+                <div id="1" class="square shadow" data-id="square"></div>
+                <div id="2" class="square shadow" data-id="square"></div>
+                <div id="3" class="square shadow" data-id="square"></div>
+                <div id="4" class="square shadow" data-id="square"></div>
+                <div id="5" class="square shadow" data-id="square"></div>
+                <div id="6" class="square shadow" data-id="square"></div>
+                <div id="7" class="square shadow" data-id="square"></div>
+                <div id="8" class="square shadow" data-id="square"></div>
+                <div id="9" class="square shadow" data-id="square"></div>
 
                 <!-- Scoreboard -->
                 <div class="score shadow" style="background-color: var(--turquoise)">
@@ -71,10 +71,10 @@
         </footer>
 
         <!-- Modal that opens when game ends -->
-        <div class="modal hidden">
-            <div class="modal-contents">
-                <p>Player 1 win!</p>
-                <button>Play Again</button>
+        <div class="modal hidden" data-id="modal">
+            <div class="modal-contents" data-id="modal-contents">
+                <p data-id="modal-text">Player 1 win!</p>
+                <button data-id="modal-btn">Play Again</button>
             </div>
         </div>
 
