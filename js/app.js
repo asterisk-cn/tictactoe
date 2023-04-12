@@ -1,3 +1,4 @@
+import Store from "./store.js";
 import View from "./view.js";
 
 const App = {
@@ -57,12 +58,10 @@ const App = {
             App.$.menuItems.classList.toggle("hidden");
         });
 
-        // TODO
         App.$.resetBtn.addEventListener("click", (event) => {
             console.log("Reset the game");
         });
 
-        // TODO
         App.$.newRoundBtn.addEventListener("click", (event) => {
             console.log("Add a new round");
         });
@@ -135,12 +134,33 @@ const App = {
     },
 };
 
+const players = [
+    {
+        id: 1,
+        name: "Player 1",
+        iconClass: "fa-x",
+        colorClass: "turquoise",
+    },
+    {
+        id: 2,
+        name: "Player 2",
+        iconClass: "fa-o",
+        colorClass: "yellow",
+    },
+];
+
 function init() {
     const view = new View();
+    const store = new Store(players);
 
     view.bindGameResetEvent((event) => {
-        console.log("Reset the game");
-        console.log(event);
+        view.closeAll();
+
+        store.reset();
+
+        view.clearMoves();
+
+        view.setTurnIndicator(store.game.currentPlayer);
     });
 
     view.bindNewRoundEvent((event) => {
@@ -148,9 +168,27 @@ function init() {
         console.log(event);
     });
 
-    view.bindSquareClickEvent((event) => {
-        console.log("Square clicked");
-        console.log(event);
+    view.bindPlayerMoveEvent((square) => {
+        const existingMove = store.game.moves.find((move) => move.squareId === +square.id);
+
+        if (existingMove) {
+            return;
+        }
+
+        // Place an icon of the current player in the clicked square
+        view.handlePlayerMove(square, store.game.currentPlayer);
+
+        // Advance to the next player
+        store.playerMove(+square.id);
+
+        if (store.game.status.isComplete) {
+            view.openModal(store.game.status.winner ? `Player ${store.game.status.winner.id} wins!` : "It's a tie!");
+
+            return;
+        }
+
+        // Set the next player's turn indicator
+        view.setTurnIndicator(store.game.currentPlayer);
     });
 }
 

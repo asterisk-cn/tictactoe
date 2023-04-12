@@ -27,21 +27,53 @@ export default class View {
 
     bindGameResetEvent(handler) {
         this.$.resetBtn.addEventListener("click", handler);
+        this.$.modalBtn.addEventListener("click", handler);
     }
 
     bindNewRoundEvent(handler) {
         this.$.newRoundBtn.addEventListener("click", handler);
     }
 
-    bindSquareClickEvent(handler) {
-        this.$.squares.forEach((square) => {
-            square.addEventListener("click", handler);
+    bindPlayerMoveEvent(handler) {
+        this.$$.squares.forEach((square) => {
+            square.addEventListener("click", () => handler(square));
         });
     }
 
     /**
      * DOM helper methods
      */
+
+    openModal(message) {
+        this.$.modal.classList.remove("hidden");
+        this.$.modalText.innerText = message;
+    }
+
+    #closeModal() {
+        this.$.modal.classList.add("hidden");
+    }
+
+    closeAll() {
+        this.#closeModal();
+        this.#closeMenu();
+    }
+
+    clearMoves() {
+        this.$$.squares.forEach((square) => {
+            square.replaceChildren();
+        });
+    }
+
+    #closeMenu() {
+        this.$.menuItems.classList.add("hidden");
+        this.$.menuBtn.classList.remove("border");
+
+        const icon = this.$.menuBtn.querySelector("i");
+
+        icon.classList.remove("fa-chevron-up");
+        icon.classList.add("fa-chevron-down");
+    }
+
     #toggleMenu() {
         this.$.menuItems.classList.toggle("hidden");
         this.$.menuBtn.classList.toggle("border");
@@ -52,6 +84,24 @@ export default class View {
         icon.classList.toggle("fa-chevron-down");
     }
 
+    handlePlayerMove(squareEl, player) {
+        const icon = document.createElement("i");
+        icon.classList.add("fa-solid", player.iconClass, player.colorClass);
+        squareEl.replaceChildren(icon);
+    }
+
+    setTurnIndicator(player) {
+        const icon = document.createElement("i");
+        const label = document.createElement("p");
+
+        icon.classList.add("fa-solid", player.iconClass, player.colorClass);
+
+        label.classList.add(player.colorClass);
+        label.innerText = `${player.name}, you are up!`;
+
+        this.$.turn.replaceChildren(icon, label);
+    }
+
     #qs(selector, parent) {
         const el = parent ? parent.querySelector(selector) : document.querySelector(selector);
 
@@ -60,11 +110,11 @@ export default class View {
         return el;
     }
 
-    #qsAll(selector, parent) {
-        const elList = parent.querySelectorAll(selector);
+    #qsAll(selector) {
+        const elList = document.querySelectorAll(selector);
 
         if (!elList) throw new Error(`No element found with selector: ${selector}`);
 
-        return el;
+        return elList;
     }
 }
