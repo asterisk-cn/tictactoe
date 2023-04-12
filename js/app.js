@@ -1,3 +1,5 @@
+import View from "./view.js";
+
 const App = {
     $: {
         menu: document.querySelector("[data-id='menu']"),
@@ -73,7 +75,6 @@ const App = {
             App.$.modal.classList.add("hidden");
         });
 
-        // TODO
         App.$.squares.forEach((square) => {
             square.addEventListener("click", (event) => {
                 // Check if there is already a play
@@ -134,4 +135,23 @@ const App = {
     },
 };
 
-window.addEventListener("load", App.init);
+function init() {
+    const view = new View();
+
+    view.bindGameResetEvent((event) => {
+        console.log("Reset the game");
+        console.log(event);
+    });
+
+    view.bindNewRoundEvent((event) => {
+        console.log("Add a new round");
+        console.log(event);
+    });
+
+    view.bindSquareClickEvent((event) => {
+        console.log("Square clicked");
+        console.log(event);
+    });
+}
+
+window.addEventListener("load", init);
