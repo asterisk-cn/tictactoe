@@ -73,6 +73,19 @@ export default class View {
         });
     }
 
+    initializeMoves(moves) {
+        this.$$.squares.forEach((square) => {
+            const existingMove = moves.find((move) => move.squareId === +square.id);
+
+            if (existingMove) {
+                const icon = document.createElement("i");
+
+                icon.classList.add("fa-solid", existingMove.player.iconClass, existingMove.player.colorClass);
+                square.replaceChildren(icon);
+            }
+        });
+    }
+
     #closeMenu() {
         this.$.menuItems.classList.add("hidden");
         this.$.menuBtn.classList.remove("border");
