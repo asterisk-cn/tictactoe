@@ -20,20 +20,26 @@ function init() {
     const view = new View();
     const store = new Store("live-t3-key", players);
 
-    window.addEventListener("storage", () => {
+    // Current tab state changes
+    store.addEventListener("statechange", () => {
         view.render(store.game, store.stats);
     });
 
+    // A different tab state changes
+    window.addEventListener("storage", () => {
+        console.log("State changed from another tab");
+        view.render(store.game, store.stats);
+    });
+
+    // The first load of the document
     view.render(store.game, store.stats);
 
     view.bindGameResetEvent((event) => {
         store.reset();
-        view.render(store.game, store.stats);
     });
 
     view.bindNewRoundEvent((event) => {
         store.newRound();
-        view.render(store.game, store.stats);
     });
 
     view.bindPlayerMoveEvent((square) => {
@@ -45,8 +51,6 @@ function init() {
 
         // Advance to the next player
         store.playerMove(+square.id);
-
-        view.render(store.game, store.stats);
     });
 }
 
