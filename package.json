@@ -1,0 +1,11 @@
+{
+  "name": "tictactoe",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:asterisk-cn/tictactoe.git",
+  "author": "asterisk-cn <ttasuku-s122@g.ecc.u-tokyo.ac.jp>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}

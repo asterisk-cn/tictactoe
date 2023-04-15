@@ -1,7 +1,8 @@
 import Store from "./store.js";
+import { Player } from "./types";
 import View from "./view.js";
 
-const players = [
+const players: Player[] = [
     {
         id: 1,
         name: "Player 1",
