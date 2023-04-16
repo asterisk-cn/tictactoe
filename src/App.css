@@ -1,0 +1,52 @@
+/* Game controls */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: 50px repeat(3, 80px) 60px;
+    gap: 5px;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        width: 490px;
+        grid-template-columns: repeat(3, 150px);
+        grid-template-rows: 50px repeat(3, 150px) 60px;
+        gap: 20px;
+    }
+}
+
+/* Game board buttons */
+
+.square {
+    background-color: var(--gray);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+}
+
+.square:hover {
+    cursor: pointer;
+    opacity: 70%;
+}
+
+.score {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.score p {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.score span {
+    font-size: 12px;
+    margin-top: 2px;
+}
